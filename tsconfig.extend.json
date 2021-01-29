@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+      "baseUrl": "./src",
+      "paths": {
+        "@routes": ["./constant/routes.ts"],
+        "@constant": ["./constant"],
+        "@components": ["./components"],
+        "@elements": ["./elements"],
+        "@hooks": ["./hooks"],
+        "@routing": ["./routing"],
+        "@state": ["./state"],
+        "@static": ["./static"],
+        "@styles": ["./styles"],
+        "@types": ["./types"]
+      }
+    }
+}
