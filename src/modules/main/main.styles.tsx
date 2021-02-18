@@ -3,8 +3,6 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   background: transparent;
-  border-radius: 3px;
-  border: 2px solid palevioletred;
   margin: 1em;
   padding: 1em;
 `;
@@ -14,22 +12,11 @@ interface TitleProps {
 }
 
 export const Title = styled.h1<TitleProps>`
+  margin-bottom: 20px;
   color: ${(props) => props.color || "palevioletred"};
+  font-size: 2rem;
   text-align: center;
-
-  &:hover {
-    color: green;
-    cursor: pointer;
-  }
-
-  .subtitle {
-    display: block;
-    text-decoration: underline;
-  }
+  font-weight: 800;
 `;
 
-export const Button = styled(antd.Button)`
-  width: 100%;
-  height: 60px;
-  font-size: 24px;
-`;
+export const Card = styled(antd.Card)``;

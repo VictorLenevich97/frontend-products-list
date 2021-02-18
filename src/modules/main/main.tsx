@@ -1,38 +1,52 @@
-import React from "react";
-import { PAGE_DETAIL } from "@routes";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../state/toolkit";
-import { increment } from "../../state/mainReducerSlice";
-import { useAppDispatch, AppDispatch } from "../../state/toolkit";
-import { Container, Title, Button } from "./main.styles";
+import { useAppDispatch } from "../../state/toolkit";
+import { getProducts, updateProducts } from "../../state/products/product.api";
+import { ProductItem } from "../../types/product";
+import { ProductList } from "./components/product-list";
+import { ModalUpdateProduct } from "./components/modal-update";
+import { Container, Title } from "./main.styles";
 
 const Main = () => {
-  const store = useSelector((state: RootState) => state.main);
+  const state = useSelector((state: RootState) => state);
+  const { productSlice } = state;
   const dispatch = useAppDispatch();
 
-  // Async func with thunk
-  const asyncAddCount = () => {
-    return async (dispatch: AppDispatch) => {
-      dispatch(increment(1));
-    };
-  };
+  useEffect(() => {
+    getProducts(dispatch);
+  }, [dispatch]);
 
-  console.log("PAGE_DETAIL", PAGE_DETAIL);
+  const [viewEditModal, setViewEditModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<ProductItem>({
+    _id: "",
+    title: "",
+    price: "",
+  });
+
+  const onFinish = (values: any) => {
+    const { title, price } = values;
+    updateProducts(dispatch, { _id: selectedProduct._id, title, price });
+    setViewEditModal(false);
+  };
 
   return (
     <Container>
-      <Title color="#fa8c16">
-        {store.count}
-        <span className="subtitle">Что-то вложенное</span>
-      </Title>
-      <Button
-        type="primary"
-        onClick={() => {
-          dispatch(asyncAddCount());
-        }}
-      >
-        Click
-      </Button>
+      <Title color="#3a3a3a">Список продуктов</Title>
+
+      <ProductList
+        loading={productSlice.loading}
+        products={productSlice.data}
+        setSelectedProduct={setSelectedProduct}
+        setViewEditModal={setViewEditModal}
+      />
+
+      <ModalUpdateProduct
+        selectedProduct={selectedProduct}
+        onFinish={onFinish}
+        viewEditModal={viewEditModal}
+        setViewEditModal={setViewEditModal}
+      />
     </Container>
   );
 };

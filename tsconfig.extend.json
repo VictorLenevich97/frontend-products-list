@@ -3,6 +3,7 @@
       "baseUrl": "./src",
       "paths": {
         "@routes": ["./constant/routes.ts"],
+        "@endpoints": ["./constant/endpoints.ts"],
         "@constant": ["./constant"],
         "@components": ["./components"],
         "@elements": ["./elements"],
